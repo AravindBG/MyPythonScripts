@@ -12,7 +12,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s')
 logging.disable(logging.CRITICAL)
 
-os.chdir('ENTER The Root Folder')
+os.chdir('Enter root folder')
 
 # args input filename, password, number of pages
 
@@ -41,7 +41,9 @@ def createimagefromdoc(inputfilename, doc, numofpages):
     pageIndex = 1
     totalPages = int(numofpages)
     for page in doc:
-        pix = page.getPixmap()
+        image_matrix = fitz.Matrix(fitz.Identity)
+        image_matrix.preScale(2, 2)
+        pix = page.getPixmap(alpha = False, matrix=image_matrix)
         output = inputfilename + '-image-Page-' + str(pageIndex) + ".png"
         filepath = os.path.join(os.getcwd(), 'Output', output)
         pix.writePNG(str(filepath))

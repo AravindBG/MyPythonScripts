@@ -1,39 +1,23 @@
-#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
-
 import os
-import fitz
 import sys
-import platform
 import logging
+import fitz
+import Sys_Notification
 
 # Enabled logging
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s')
-logging.disable(logging.CRITICAL)
+# logging.disable(logging.CRITICAL)
 
-os.chdir('Enter root folder')
+
+# Create a folder in your machine to download the pdf documents
+
+# os.chdir('/Users/aravindb/Documents/Mobile_bill/')
+os.chdir('Enter the path where you want to download the bill')
+
 
 # args input filename, password, number of pages
-
-
-def notifyUser(title, message):
-    plt = platform.system()
-
-    if plt == 'Darwin':
-        command = f'''
-	    osascript -e 'display notification "{message}" with title "{title}"'
-	    '''
-    elif plt == 'Linux':
-        command = f'''
-            	notify-send "{title}" "{message}"
-            	'''
-    else:
-        logging.debug('Unable to get the Platform')
-        return
-
-    os.system(command)
-
 
 # Number of pages in the pdf
 
@@ -44,7 +28,8 @@ def createimagefromdoc(inputfilename, doc, numofpages):
         image_matrix = fitz.Matrix(fitz.Identity)
         image_matrix.preScale(2, 2)
         pix = page.getPixmap(alpha = False, matrix=image_matrix)
-        output = inputfilename + '-image-Page-' + str(pageIndex) + ".png"
+        filename = inputfilename.split('.')[-1]
+        output = filename + '-image-Page-' + str(pageIndex) + ".png"
         filepath = os.path.join(os.getcwd(), 'Output', output)
         pix.writePNG(str(filepath))
         # Exit when the number of pages required matches the page index.
@@ -52,20 +37,19 @@ def createimagefromdoc(inputfilename, doc, numofpages):
             break
         pageIndex = pageIndex + 1
 
-    notifyUser("Success", "Images generated")
+    Sys_Notification.notifyuser("Success", "Images generated")
 
 
 # Create image from the pdf document
 
 def processimagesfromPDF(inputfilename, password, numofpages):
     logging.debug('File name %s' % (inputfilename))
-
     if 'pdf' not in inputfilename.upper().lower():
         return
 
     filePath = os.path.join(os.getcwd(), inputfilename)
     if not os.path.isfile(filePath):
-        notifyUser('Error', inputfilename + ' does not exist')
+        Sys_Notification.notifyuser('Error', inputfilename + ' does not exist')
         return
 
     # Open the PDF
@@ -78,7 +62,7 @@ def processimagesfromPDF(inputfilename, password, numofpages):
         createimagefromdoc(inputfilename, doc, numofpages)
 
     except Exception as e:
-        notifyUser('Error', 'Unable to open the file')
+        Sys_Notification.notifyuser('Error', 'Unable to open the file')
 
 
 # Iterate all the files in the root folder
@@ -93,7 +77,8 @@ def createimagesforallPDFs():
         if not os.path.isfile(os.path.join(rootFolder, fileName)):
             continue
 
-        processimagesfromPDF(fileName, "mdm3", 1)
+        # Enter the PDF password below.
+        processimagesfromPDF(fileName, "Enter your pdf password here", 1)
 
 
 if len(sys.argv) == 4:

@@ -17,25 +17,25 @@ Download a password protected pdf from the email attachment and convert the firs
 
 ## Execute Script
 
-> *#Pick the recent email from the Gmail folder, download the attached pdf, and convert the first page of pdf to image.*
+> *#Pick the recent email from the Gmail folder, download the attached pdf, and convert the first page of pdf to image.*<br>
 $ python Mobile_Bill_Processor.py
 
 Using arguments
 
-> *#Pick the last 5 emails from the Gmail folder.*
+> *#Pick the last 5 emails from the Gmail folder.*<br>
 $ python Mobile_Bill_Processor.py 5
 
 ### Customising pdf to Image converter (You can run this script individually if needed)
-> *#Convert all the files in the downloaded folder.*
+> *#Convert all the files in the downloaded folder.* <br>
 $ python Pdf_Image.py 
 
 Using arguments
 
-> *#Convert first 2 pages of sample.pdf with a password 1234 to image.*
+> *#Convert first 2 pages of sample.pdf with a password 1234 to image.*<br>
 $ python Pdf_Image.py sample.pdf 1234 2
 
-> *#Convert sample.pdf with a password 1234 to image.*
+> *#Convert sample.pdf with a password 1234 to image.*<br>
 $ python Pdf_Image.py sample.pdf 1234
 
-> *#To convert sample.pdf with a no password.*
+> *#To convert sample.pdf with a no password.*<br>
 $ python Pdf_Image.py sample.pdf

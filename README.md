@@ -2,7 +2,7 @@
 
 Download a password protected pdf from the email attachment and convert the first page of the pdf in to an image. 
 
-## Check list to work this script
+## Check list to work Mobile_Bill_Processor.py script
 
 * This script will work only on Python 3. (Tested verion 3.6.8)
 * Install the following Python packages using pip

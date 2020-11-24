@@ -24,6 +24,11 @@ os.chdir('Enter the path where you want to download the bill')
 def createimagefromdoc(inputfilename, doc, numofpages):
     pageIndex = 1
     totalPages = int(numofpages)
+    
+    newfilepath = os.path.join(os.getcwd(), 'Output')
+    if not os.path.isdir(newfilepath):
+        os.mkdir(newfilepath)
+
     for page in doc:
         image_matrix = fitz.Matrix(fitz.Identity)
         image_matrix.preScale(2, 2)

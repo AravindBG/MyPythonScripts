@@ -5,14 +5,20 @@ import email
 import logging
 import sys
 import Sys_Notification
+import Pdf_Image
 
 # Enabled logging
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s')
 # logging.disable(logging.CRITICAL)
-# os.chdir('/Users/aravindb/Documents/Mobile_bill/')
-os.chdir('Enter the path where you want to download the bill')
+
+directory = os.path.join(os.getcwd(), 'Mobile_bill')
+
+if not os.path.isdir(directory):
+    os.mkdir(directory)
+
+# os.chdir(directory)
 
 mail = imaplib.IMAP4_SSL('imap.gmail.com',993)
 mail.login('Enter email id here','Enter app specific password here')
@@ -58,8 +64,8 @@ for num in data[0].split():
             continue
 
         if bool(fileName):
-            logging.debug(os.getcwd())
-            filePath = os.path.join(os.getcwd(), fileName)
+            logging.debug(directory)
+            filePath = os.path.join(directory, fileName)
             if not os.path.isfile(filePath) :
                 fp = open(filePath, 'wb')
                 fp.write(part.get_payload(decode=True))
@@ -69,10 +75,8 @@ for num in data[0].split():
             Sys_Notification.notifyuser('Success', 'Pdf attachments downloaded')
             logging.debug(log_message)
             num_emails_read = num_emails_read + 1
-            # Add the correct path of the files in your machine.
-            # exec_command = 'python3 /Users/aravindb/Documents/GitHub/PrivatePythonScripts/Pdf_Image.py'
-            exec_command = 'Enter the python command with the correct path to execute the script'
-            # print(exec_command)
-            os.system(exec_command)
+            # Add the password and number of pages params in the method params.
+            # print(filePath)
+            Pdf_Image.processimagesfromPDF(fileName, 'Enter the pdf password', "Enter number of pages")
             break
     

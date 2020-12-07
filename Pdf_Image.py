@@ -10,17 +10,11 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s')
 # logging.disable(logging.CRITICAL)
 
-directory = os.path.join(os.getcwd(), 'Mobile_bill') #'/Users/aravindb/Documents/Mobile_bill'
+directory = os.path.join(os.getcwd(), 'Mobile_bill') 
 output_path = os.path.join(directory, 'Output')
 
-# Create a folder in your machine to download the pdf documents
-
-# os.chdir('/Users/aravindb/Documents/Mobile_bill/')
-os.chdir('Enter the path where you want to download the bill')
 if not os.path.isdir(directory):
     os.mkdir(directory)
-
-# os.chdir(directory)
 
 # args input filename, password, number of pages
 
@@ -45,7 +39,6 @@ def createimagefromdoc(inputfilename, doc, numofpages):
         if pageIndex == totalPages:
             break
         pageIndex = pageIndex + 1
-    
     Sys_Notification.notifyuser("Success", "Images generated")
 
 
@@ -84,27 +77,4 @@ def createimagesforallPDFs():
     for fileName in os.listdir(directory):
         if not os.path.isfile(os.path.join(directory, fileName)):
             continue
-
         processimagesfromPDF(fileName, "mdm3", 1)
-
-
-if len(sys.argv) == 4:
-    pdffile = sys.argv[1]
-    password = sys.argv[2]
-    numberofpages = sys.argv[3]
-
-    processimagesfromPDF(pdffile, password, numberofpages)
-
-elif len(sys.argv) == 3:
-    pdffile = sys.argv[1]
-    password = sys.argv[2]
-
-    processimagesfromPDF(pdffile, password, -1)
-
-elif len(sys.argv) == 2:
-    pdffile = sys.argv[1]
-    
-    processimagesfromPDF(pdffile, "", -1)
-
-elif len(sys.argv) == 1:
-    createimagesforallPDFs()

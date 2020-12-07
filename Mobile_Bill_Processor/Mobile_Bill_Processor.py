@@ -53,6 +53,8 @@ def sort_email_list(emails):
 
 
 mail = imaplib.IMAP4_SSL('imap.gmail.com',993)
+mail.login('#Enter your email id here','#Enter your app secret password here')
+mail.select('#Email folder')
 type, data = mail.search(None, 'ALL')
 mail_ids = data[0]
 id_list = mail_ids.split()

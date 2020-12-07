@@ -1,8 +1,10 @@
+#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
+
 import os
-import sys
 import logging
 import fitz
 import Sys_Notification
+import sys
 
 # Enabled logging
 logging.basicConfig(
@@ -46,6 +48,7 @@ def createimagefromdoc(inputfilename, doc, numofpages):
 
 def processimagesfromPDF(inputfilename, password, numofpages):
     logging.debug('File name %s' % (inputfilename))
+    print(inputfilename)
     if 'pdf' not in inputfilename.upper().lower():
         return
 
@@ -77,4 +80,25 @@ def createimagesforallPDFs():
     for fileName in os.listdir(directory):
         if not os.path.isfile(os.path.join(directory, fileName)):
             continue
-        processimagesfromPDF(fileName, "Enter your password here", 1)
+        processimagesfromPDF(fileName, "Enter the pdf password", 1)
+
+if len(sys.argv) == 4:
+    pdffile = sys.argv[1]
+    password = sys.argv[2]
+    numberofpages = sys.argv[3]
+
+    processimagesfromPDF(pdffile, password, numberofpages)
+
+elif len(sys.argv) == 3:
+    pdffile = sys.argv[1]
+    password = sys.argv[2]
+
+    processimagesfromPDF(pdffile, password, -1)
+
+elif len(sys.argv) == 2:
+    pdffile = sys.argv[1]
+
+    processimagesfromPDF(pdffile, "", -1)
+
+elif len(sys.argv) == 1:
+    createimagesforallPDFs()
